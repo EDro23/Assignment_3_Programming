@@ -11,8 +11,8 @@ Game Stats Program!
 # List of players in a nests dictionary.
 
 players = {'Kailey':{'wins':27,'losses':5,'ties':2},
-           'Mike T':{'wins':17,'losses':3,'ties':5},
-           'MC Hammer':{'wins':31,'losses':11,'ties':1},
+           'Mike':{'wins':17,'losses':3,'ties':5},
+           'Michael':{'wins':31,'losses':11,'ties':1},
            'Arun':{'wins':52,'losses':1,'ties':3}}
 
 def title():
