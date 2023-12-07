@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Created on Thu Dec  7 09:51:44 2023
+Created on Thu Dec  7 11:25:29 2023
 
 @author: ethan.drover
 """
@@ -18,13 +18,14 @@ def menu():
     print("exit \t- Exit program\n")
 
 def read_sales():
-    monthly_sales = {}
+    monthly_sales = {month.lower(): 0.0 for month in months}
     try:
         with open('monthly_sales.txt', 'r') as rfh:
             for line in rfh:
                 if line.strip():
                     month, sale = (item.strip() for item in line.split('\t'))
-                    monthly_sales[month.lower()] = float(sale)
+                    if month.lower() in monthly_sales:
+                        monthly_sales[month.lower()] = float(sale)
     except FileNotFoundError:
         pass
     except ValueError:
@@ -39,17 +40,26 @@ def write_sales(file_path, sales):
             wfh.write(f"{month.lower()}\t{sale:.2f}\n")
 
 def view_sales(sales, month):
-    if month.lower() in sales:
-        print(f"Sales amount for {month} is {sales[month.lower()]:.2f}")
+    search_month = month.lower()[:3]
+    print(f"Input month: {search_month}")
+    if search_month in sales:
+        print(f"Sales amount for {search_month.capitalize()} is {sales[search_month]:,.2f}")
+        print()
     else:
         print("Invalid three-letter month.")
 
 def edit_sales(sales, month, amount):
-    if month.lower() in sales:
-        sales[month.lower()] = float(amount)
-        print(f"Sales amount for {month.capitalize()} is {sales[month.lower()]:,.2f}.")
+    edit_month = month.lower()[:3]
+    print(f"Input month: {edit_month}")
+    if edit_month in sales:
+        sales[edit_month] = float(amount)
+        print(f"Sales amount for {edit_month.capitalize()} is {sales[edit_month]:,.2f}.")
     else:
-        print("Invalid three-letter month.")        
+        print("Invalid three-letter month.")
+
+def sales_summary(sales):
+    total_sales = sum(sales.values())
+    print(f"Total sales for the year: {total_sales:.2f}")
 
 def main():
     title()
@@ -68,8 +78,7 @@ def main():
             edit_sales(sales, month_input, amount_input)
             write_sales('monthly_sales.txt', sales)
         elif command == 'totals':
-            # Implement the logic for viewing sales summary for the year
-            pass
+            sales_summary(sales)
         elif command == 'exit':
             print("Exiting program.")
             break
