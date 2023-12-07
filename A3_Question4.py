@@ -1,12 +1,30 @@
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Wed Dec  6 08:39:35 2023
+Created on Mon Dec  4 17:12:32 2023
 
-@author: ethan.drover
+@author: ethandrover
+
+World Cup Data Program!
+
 """
 
-def read_world_cup_data():
-    with open('World_cup_champions.txt', 'r') as file:
+def read_world_cup_data(file_path="World_cup_champions.txt"):
+    """
+    
+
+    Parameters
+    ----------
+    file_path : txt file, optional
+        The file path we need to read. The default is "World_cup_champions.txt".
+
+    Returns
+    -------
+    world_cup_data : txt file
+        
+
+    """
+    with open(file_path, 'r') as file:
         lines = file.readlines()
 
     world_cup_data = {}
@@ -20,27 +38,43 @@ def read_world_cup_data():
     return world_cup_data
 
 def display_most_successful_country(world_cup_data):
+    """
+    
+
+    Parameters
+    ----------
+    world_cup_data : Txt
+        a dict containing information about the world up data.
+
+    Returns
+    -------
+    A display of the FIFA world cup winners in alphabetical order, showing the end user\
+        how much each country has won and in which years.
+
+    """
     sorted_countries = sorted(world_cup_data.items())
-    divider = ("=")
+    divider = "="
     print("\nFIFA World Cup Winners\n")
     print("Country\t\t\tWins  Years")
     print(f'{divider*7}\t\t\t{divider*4}  {divider*5}')
 
-    # most_wins_country = None
-    # most_wins = 0
-
     for country, data in sorted_countries:
         wins = data['Wins']
         years = ', '.join(data['Years'])
-        print("{:<15} {:<5} {:<15}".format(country, wins, years))
+        print(f"{country:<16} {wins:<5} {years:<15}")
 
-        # if wins > most_wins:
-        #     most_wins = wins
-        #     most_wins_country = country
+def main():
+    """
+    The main function for running the program.
 
-   # print("\nThe country with the most championships is:", most_wins_country)
+    Returns
+    -------
+    None.
+
+    """
+    file_path = "World_cup_champions.txt"
+    world_cup_data = read_world_cup_data(file_path)
+    display_most_successful_country(world_cup_data)
 
 if __name__ == "__main__":
-    file_path = "world_cup_champions.txt"
-    world_cup_data = read_world_cup_data()
-    display_most_successful_country(world_cup_data)
+    main()
